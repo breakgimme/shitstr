@@ -1,6 +1,22 @@
+@keyframes show {
+    from {
+        transform: translate(0px, 100%);
+    }
+    to {
+        transform: translate(0px, 0px);
+    }
+}
+
 body {
     background-color: #333333;
+    overflow-x: hidden;
 }
+
+.center {
+    text-align: center;
+    margin: 1em;
+}
+
 #posts {
     font-family: sans-serif;
     overflow-wrap: break-word;
@@ -17,6 +33,8 @@ body {
     background-color: #555555;
     margin-bottom: 0.4em;
     border-radius: 0.2em;
+    animation-name: show;
+    animation-duration: 0.2s;
 }
 
 p {
@@ -26,6 +44,7 @@ p {
 .logo {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     text-align: center;
+    color: #EBEBEB;
 }
 
 .top {
@@ -34,4 +53,16 @@ p {
 
 .bottom {
     font-size: 1em;
+}
+
+.small {
+    font-size: 0.7em;
+    margin: 0em;
+}
+.name {
+    margin-bottom: 0em;
+}
+
+.content {
+    font-size: 0.9em;
 }

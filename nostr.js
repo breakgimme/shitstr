@@ -54,7 +54,7 @@ function handleMessage(event, server) {
                         let posts = document.getElementById("posts")
                         let element = document.createElement('li');
                         element.setAttribute('id', id);
-                        element.innerHTML = `<a class="relay">${server.url}</a> <a class="date">${new Date(data[2].created_at*1000).toLocaleString()}</a> <a class="name" title=${key}>${DOMPurify.sanitize(display)}</a> <a class="content">${DOMPurify.sanitize(marked.parse(data[2].content))}</a>`
+                        element.innerHTML = `<p class="name" title=${key}>${DOMPurify.sanitize(display)}</p><a class="relay small">${server.url}</a> <a class="date small">${new Date(data[2].created_at*1000).toLocaleString()}</a> <a class="content">${DOMPurify.sanitize(marked.parse(data[2].content))}</a>`
                         /*switch(server.eose) {
                             case false: {
                                 posts.appendChild(element);
@@ -111,6 +111,9 @@ function ensureEvent(id) {
             server[1].socket.send(`["CLOSE", "${id.substring(0,8)}"]`)
         }
     }
+}
+
+function post(server, message, key) {
 }
 
 for (const relay of defaultServers) {
