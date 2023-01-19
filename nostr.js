@@ -1,6 +1,6 @@
 //const socket = new WebSocket('wss://nos.lol');
 //var eose = false;
-const defaultServers = ["wss://nos.lol", "wss://brb.io"]
+const defaultServers = ["wss://nos.lol", "wss://brb.io", "wss://relay.nostr.info", "wss://relay.damus.io"]
 var identities = new Object;
 var EventArray = new Array;
 var TimeStampPostArray = new Array;
@@ -55,7 +55,7 @@ function handleMessage(event, server) {
                         let element = document.createElement('li');
                         let avatar = (function(){
                             if ((key in identities) && identities[key].picture != undefined) {
-                                return `<img src="${identities[key].picture}" class="avatar">`;
+                                return `<img src="${DOMPurify.sanitize(identities[key].picture)}" class="avatar">`;
                             } else {return '';}
                         })();
                         element.setAttribute('id', id);
@@ -83,8 +83,8 @@ function handleMessage(event, server) {
                         //chujkurwa
                         /*if(servers[btoa(data[2].content)] == undefined) {
                             connect(data[2].content)
-                        };*/
-                        break;
+                        };
+                        break;*/
                     }
                 }
             }
@@ -97,7 +97,7 @@ function handleMessage(event, server) {
                     break;
                 }
                 case "identities": {
-                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 500}]`);
+                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 100}]`);
                     break;
                 }
             }
