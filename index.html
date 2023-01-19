@@ -2,16 +2,16 @@
 <html>
     <head>
     <title>test nostr client</title>
-    <style>
-        #posts {font-family: sans-serif; overflow-wrap: break-word;}
-        h1 {font-family: "Comic Sans MS", "Comic Sans", cursive;}
-    </style>
+    <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <h1>shitstr <s>hopefully</s> functional <s>hopefully</s> multi relay</h1>
+        <div class="logo">
+            <div class="top">shitstr</div>
+            <div class="bottom"><s>hopefully</s> functional <s>hopefully</s> multi relay</div>
+        </div>
         <ul id="posts"></ul>
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/dompurify/purify.min.js"></script>
-        <script src="test.js"></script>
+        <script src="nostr.js"></script>
     </body>
 </html>

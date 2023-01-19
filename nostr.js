@@ -92,7 +92,7 @@ function handleMessage(event, server) {
                     break;
                 }
                 case "identities": {
-                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 10}]`);
+                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 50}]`);
                     break;
                 }
             }
