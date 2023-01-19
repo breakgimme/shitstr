@@ -2,7 +2,19 @@
 //var eose = false;
 const defaultServers = ["wss://nos.lol", "wss://brb.io"]
 var identities = new Object;
-var eventCache = new Object;
+var EventArray = new Array;
+var TimeStampPostArray = new Array;
+const objectComparisonCallback = (arrayItemA, arrayItemB) => {
+    if (arrayItemA.timestamp < arrayItemB.timestamp) {
+        return -1
+    }
+
+    if (arrayItemA.timestamp > arrayItemB.timestamp) {
+        return 1
+    }
+
+    return 0
+}
 var servers = new Object;
 function connect(url) {
     let socket = new WebSocket(url);
@@ -25,8 +37,8 @@ function handleMessage(event, server) {
             let key = data[2].pubkey
             let id = data[2].id
             console.log(`new event from ${server.url}`)
-            if (eventCache[id] == undefined) {
-                eventCache[id] = data[2]
+            if (!EventArray.includes(id)) {
+                EventArray.push(id);
                 switch(data[2].kind) {
                     case 0: {
                         let name = JSON.parse(data[2].content).name
@@ -36,12 +48,14 @@ function handleMessage(event, server) {
                         break;
                     }
                     case 1: {
+                        TimeStampPostArray.push({id: id, timestamp: data[2].created_at*1000});
+                        TimeStampPostArray.sort(objectComparisonCallback);
                         let display = (function () {if (key in identities) {return identities[key]} else {return key;};})();
                         let posts = document.getElementById("posts")
                         let element = document.createElement('li');
                         element.setAttribute('id', id);
                         element.innerHTML = `<a class="relay">${server.url}</a> <a class="date">${new Date(data[2].created_at*1000).toLocaleString()}</a> <a class="name" title=${key}>${DOMPurify.sanitize(display)}</a> <a class="content">${DOMPurify.sanitize(marked.parse(data[2].content))}</a>`
-                        switch(server.eose) {
+                        /*switch(server.eose) {
                             case false: {
                                 posts.appendChild(element);
                                 break;
@@ -49,15 +63,22 @@ function handleMessage(event, server) {
                             case true: {
                                 posts.insertBefore(element, posts.firstChild)
                             }
+                        }*/
+                        let index = TimeStampPostArray.findIndex(x => x.id === id) - 1
+                        if (TimeStampPostArray[index] != undefined) {
+                            posts.insertBefore(element, document.getElementById(TimeStampPostArray[index].id))
+                        } else {
+                            posts.appendChild(element);
                         }
+
                         break;
                     }
                     case 2: {
                         console.log(`new server found: ${data[2].content}`);
                         //chujkurwa
-                        //if(servers[btoa(data[2].content)] == undefined) {
-                        //    connect(data[2].content)
-                        //};
+                        /*if(servers[btoa(data[2].content)] == undefined) {
+                            connect(data[2].content)
+                        };*/
                         break;
                     }
                 }
