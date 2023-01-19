@@ -41,16 +41,16 @@ function handleMessage(event, server) {
                 EventArray.push(id);
                 switch(data[2].kind) {
                     case 0: {
-                        let name = JSON.parse(data[2].content).name
-                        if (name != undefined) {
-                            identities[key] = name
+                        let iden = JSON.parse(data[2].content)
+                        if (iden != undefined) {
+                            identities[key] = iden
                         }
                         break;
                     }
                     case 1: {
                         TimeStampPostArray.push({id: id, timestamp: data[2].created_at*1000});
                         TimeStampPostArray.sort(objectComparisonCallback);
-                        let display = (function () {if (key in identities) {return identities[key]} else {return key;};})();
+                        let display = (function () {if (key in identities) {return identities[key].display_name || identities[key].name} else {return key.substring(0,8)};})();
                         let posts = document.getElementById("posts")
                         let element = document.createElement('li');
                         element.setAttribute('id', id);
@@ -92,7 +92,7 @@ function handleMessage(event, server) {
                     break;
                 }
                 case "identities": {
-                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 50}]`);
+                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 500}]`);
                     break;
                 }
             }
