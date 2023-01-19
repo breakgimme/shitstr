@@ -36,6 +36,8 @@ body {
     animation-name: show;
     animation-duration: 0.2s;
     width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
 }
 
 p {
@@ -71,5 +73,4 @@ p {
 .avatar {
     width: 3vh;
     height: 3vh;
-    padding-top: 0.5vh;
 }
