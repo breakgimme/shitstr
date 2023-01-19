@@ -92,7 +92,7 @@ function handleMessage(event, server) {
                     break;
                 }
                 case "identities": {
-                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 500}]`);
+                    server.socket.send(`["REQ", "posts", {"kinds": [1], "limit": 10}]`);
                     break;
                 }
             }
@@ -103,11 +103,13 @@ function handleMessage(event, server) {
     }
 };
 
-function ensureEvent(id, server) {
-    if (eventCache[id] == undefined) {
-        console.log('halo');
-        server.socket.send(`["REQ", "${id.substring(0,8)}", {"ids": ["${id}"]}]`)
-        server.socket.send(`["CLOSE", "${id.substring(0,8)}"]`)
+function ensureEvent(id) {
+    if (!EventArray.includes(id)) {
+        console.log(`ensuring ${id}`);
+        for (const server of Object.entries(servers)) {
+            server[1].socket.send(`["REQ", "${id.substring(0,8)}", {"ids": ["${id}"]}]`)
+            server[1].socket.send(`["CLOSE", "${id.substring(0,8)}"]`)
+        }
     }
 }
 
