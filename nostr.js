@@ -53,8 +53,13 @@ function handleMessage(event, server) {
                         let display = (function () {if (key in identities) {return identities[key].display_name || identities[key].name} else {return key.substring(0,8)};})();
                         let posts = document.getElementById("posts")
                         let element = document.createElement('li');
+                        let avatar = (function(){
+                            if ((key in identities) && identities[key].picture != undefined) {
+                                return `<img src="${identities[key].picture}" class="avatar">`;
+                            } else {return '';}
+                        })();
                         element.setAttribute('id', id);
-                        element.innerHTML = `<p class="name" title=${key}>${DOMPurify.sanitize(display)}</p><a class="relay small">${server.url}</a> <a class="date small">${new Date(data[2].created_at*1000).toLocaleString()}</a> <a class="content">${DOMPurify.sanitize(marked.parse(data[2].content))}</a>`
+                        element.innerHTML = `${avatar} <p class="name" title=${key}>${DOMPurify.sanitize(display)}</p><a class="relay small">${server.url}</a> <a class="date small">${new Date(data[2].created_at*1000).toLocaleString()}</a> <a class="content">${DOMPurify.sanitize(marked.parse(data[2].content))}</a>`
                         /*switch(server.eose) {
                             case false: {
                                 posts.appendChild(element);

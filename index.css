@@ -67,3 +67,9 @@ p {
 .content {
     font-size: 0.9em;
 }
+
+.avatar {
+    width: 3vh;
+    height: 3vh;
+    padding-top: 0.5vh;
+}
