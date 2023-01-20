@@ -55,7 +55,7 @@ function handleMessage(event, server) {
                         let element = document.createElement('li');
                         let avatar = (function(){
                             if ((key in identities) && identities[key].picture != undefined) {
-                                return `<img src="${DOMPurify.sanitize(identities[key].picture)}" class="avatar">`;
+                                return `<img loading="lazy" src="${DOMPurify.sanitize(identities[key].picture)}" class="avatar">`;
                             } else {return '';}
                         })();
                         element.setAttribute('id', id);
