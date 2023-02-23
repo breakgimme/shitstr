@@ -1,6 +1,8 @@
 //const socket = new WebSocket('wss://nos.lol');
 //var eose = false;
 const defaultServers = ["wss://nos.lol", "wss://brb.io", "wss://relay.nostr.info", "wss://relay.damus.io"]
+//todo: properly handle lightning instead of just removing them lol
+const spam = /(.*\u2588.*)|(^[0-9 ]+$)|(^lnbc\S*$)/;
 var identities = new Object;
 var EventArray = new Array;
 var TimeStampPostArray = new Array;
@@ -48,6 +50,7 @@ function handleMessage(event, server) {
                         break;
                     }
                     case 1: {
+                        if (spam.test(data[2].content)) {break;};
                         TimeStampPostArray.push({id: id, timestamp: data[2].created_at*1000});
                         TimeStampPostArray.sort(objectComparisonCallback);
                         let display = (function () {if (key in identities) {return identities[key].display_name || identities[key].name} else {return key.substring(0,8)};})();
