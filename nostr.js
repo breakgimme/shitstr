@@ -2,7 +2,8 @@
 //var eose = false;
 const defaultServers = ["wss://nos.lol", "wss://brb.io", "wss://relay.nostr.info", "wss://relay.damus.io"]
 //todo: properly handle lightning instead of just removing them lol
-const spam = /(.*\u2588.*)|(^[0-9 ]+$)|(^lnbc\S*$)/;
+//i know that removing t.me links is wrong, theres just too much chinese spam right now to tolerate
+const spam = /(.*\u2588.*)|(^[0-9 ]+$)|(^lnbc\S*$)|(damusvip)|(t.me)/;
 var identities = new Object;
 var EventArray = new Array;
 var TimeStampPostArray = new Array;
